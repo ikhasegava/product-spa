@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/product-spa/static/css/main.8f98db04.css",
+    "main.js": "/product-spa/static/js/main.c9d9b403.js",
+    "index.html": "/product-spa/index.html",
+    "main.8f98db04.css.map": "/product-spa/static/css/main.8f98db04.css.map",
+    "main.c9d9b403.js.map": "/product-spa/static/js/main.c9d9b403.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8f98db04.css",
+    "static/js/main.c9d9b403.js"
+  ]
+}
