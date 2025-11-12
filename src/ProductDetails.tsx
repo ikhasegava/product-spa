@@ -22,7 +22,7 @@ const ProductDetails: React.FC = () => {
     products, 
     fetchProducts, 
     updateProduct,
-    addToCart // добавлена функция добавления в корзину
+    addToCart
   } = useProductStore();
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -131,15 +131,12 @@ const ProductDetails: React.FC = () => {
     }
   };
 
-  // Функция добавления товара в корзину
   const handleAddToCart = () => {
     if (product) {
-      // Добавляем товар указанное количество раз
       for (let i = 0; i < quantity; i++) {
         addToCart(product);
       }
       showSnackbar(`Товар "${product.title}" добавлен в корзину в количестве ${quantity} шт.!`);
-      // Сбрасываем количество после добавления
       setQuantity(1);
     }
   };
@@ -392,7 +389,6 @@ const ProductDetails: React.FC = () => {
           </DialogActions>
         </Dialog>
 
-        {/* Snackbar для уведомлений */}
         <Snackbar
           open={snackbarOpen}
           autoHideDuration={4000}

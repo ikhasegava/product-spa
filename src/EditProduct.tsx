@@ -74,7 +74,6 @@ const EditProduct: React.FC = () => {
         throw new Error('Товар не найден');
       }
 
-      // Валидация
       if (!formData.title.trim() || !formData.description.trim() || !formData.price || !formData.image.trim()) {
         throw new Error('Все поля обязательны для заполнения');
       }

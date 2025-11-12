@@ -36,7 +36,6 @@ interface ProductStore {
   setSelectedCategory: (category: string) => void;
   setSearchQuery: (query: string) => void;
   resetFilters: () => void;
-  // Корзина
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   updateCartItemQuantity: (productId: number, quantity: number) => void;
@@ -222,7 +221,6 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     currentPage: 1 
   }),
 
-  // Корзина
   addToCart: (product: Product) =>
     set((state) => {
       const existingItem = state.cart.find(item => item.product.id === product.id);

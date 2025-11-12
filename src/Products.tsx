@@ -199,26 +199,27 @@ const Products: React.FC = () => {
           className="filters-popover"
         >
           <Box className="filters-popover-content">
-            <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="h6" gutterBottom className="filters-title">
               Фильтры
               {activeFiltersCount > 0 && (
                 <Chip 
                   label={activeFiltersCount} 
                   size="small" 
                   color="primary" 
-                  sx={{ ml: 1 }}
+                  className="filters-chip"
                 />
               )}
             </Typography>
 
             <Box className="filter-group">
-              <Typography variant="subtitle2" gutterBottom>
+              <Typography variant="subtitle2" gutterBottom className="filter-label">
                 Категория
               </Typography>
               <FormControl fullWidth size="small">
                 <Select
                   value={selectedCategory}
                   onChange={handleCategoryChange}
+                  className="category-select"
                 >
                   <MenuItem value="all">Все категории</MenuItem>
                   <MenuItem value="мармелад">Мармелад</MenuItem>
@@ -230,7 +231,7 @@ const Products: React.FC = () => {
             </Box>
 
             <Box className="filter-group">
-              <Typography variant="subtitle2" gutterBottom>
+              <Typography variant="subtitle2" gutterBottom className="filter-label">
                 Цена: {formatPrice(priceRange[0])} - {formatPrice(priceRange[1])}
               </Typography>
               <Slider
@@ -241,19 +242,18 @@ const Products: React.FC = () => {
                 min={0}
                 max={3000}
                 step={100}
-                color="primary"
-                sx={{ mt: 2 }}
+                className="price-slider"
               />
             </Box>
 
-            <Box className="filter-actions" sx={{ mt: 2, display: 'flex', gap: 1 }}>
+            <Box className="filter-actions">
               {activeFiltersCount > 0 && (
                 <Button 
                   variant="outlined" 
                   onClick={handleResetFiltersAndClose}
                   size="small"
                   startIcon={<ClearIcon />}
-                  sx={{ flex: 1 }}
+                  className="reset-filters-btn"
                 >
                   Сбросить
                 </Button>
@@ -262,7 +262,7 @@ const Products: React.FC = () => {
                 variant="contained" 
                 onClick={handleCloseFilters}
                 size="small"
-                sx={{ flex: 1 }}
+                className="apply-filters-btn"
               >
                 Применить
               </Button>
@@ -271,13 +271,14 @@ const Products: React.FC = () => {
         </Popover>
 
         <Box className="pagination-settings">
-          <Typography variant="body2" sx={{ mr: 2 }}>
+          <Typography variant="body2" className="pagination-label">
             Товаров на странице:
           </Typography>
           <RadioGroup
             row
             value={itemsPerPage.toString()}
             onChange={handleItemsPerPageChange}
+            className="items-per-page-group"
           >
             <FormControlLabel value="6" control={<Radio size="small" />} label="6" />
             <FormControlLabel value="9" control={<Radio size="small" />} label="9" />
@@ -286,13 +287,13 @@ const Products: React.FC = () => {
         </Box>
 
         <Box className="pagination-info">
-          <Typography variant="body2" color="textSecondary">
+          <Typography variant="body2" className="pagination-text">
             Показано {paginatedProducts.length} из {filtered.length} товаров
             {filter === 'favorites' && ' в избранном'}
           </Typography>
         </Box>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={3} className="products-grid">
           {paginatedProducts.map((product: Product) => (
             <Grid>
               <Card
@@ -315,7 +316,7 @@ const Products: React.FC = () => {
                 </div>
 
                 <CardContent className="product-content">
-                  <Typography variant="body2" color="primary" sx={{ mb: 1, fontWeight: 600, textTransform: 'uppercase', fontSize: '0.75rem' }}>
+                  <Typography variant="body2" className="product-category">
                     {product.category}
                   </Typography>
                   <Typography variant="h6" className="product-title">
@@ -337,26 +338,12 @@ const Products: React.FC = () => {
                     {product.liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                   </IconButton>
 
-                  {/* Кнопка добавления в корзину */}
                   <Button
                     variant="contained"
                     size="small"
                     startIcon={<AddShoppingCartIcon />}
                     onClick={(e) => handleAddToCart(product, e)}
-                    sx={{
-                      backgroundColor: '#10b981',
-                      '&:hover': {
-                        backgroundColor: '#059669'
-                      },
-                      borderRadius: '12px',
-                      padding: '8px 16px',
-                      fontWeight: 600,
-                      textTransform: 'none',
-                      fontSize: '0.875rem',
-                      minWidth: 'auto',
-                      flex: 1,
-                      margin: '0 8px'
-                    }}
+                    className="add-to-cart-btn"
                   >
                     В корзину
                   </Button>
@@ -386,6 +373,7 @@ const Products: React.FC = () => {
               size="large"
               showFirstButton
               showLastButton
+              className="pagination"
             />
           </Box>
         )}
