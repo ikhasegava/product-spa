@@ -58,8 +58,8 @@ const CreateProduct: React.FC = () => {
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h5" gutterBottom align="center">
+      <Paper elevation={3} sx={{ p: 4 }} className="create-product-paper">
+        <Typography variant="h5" gutterBottom align="center" className="create-product-title">
           Создать новый продукт
         </Typography>
 
@@ -69,7 +69,7 @@ const CreateProduct: React.FC = () => {
           </Alert>
         )}
 
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate className="create-product-form">
           <TextField
             label="Название"
             fullWidth
@@ -136,7 +136,6 @@ const CreateProduct: React.FC = () => {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
             >
               Создать
             </Button>

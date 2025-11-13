@@ -11,7 +11,7 @@ const Home: React.FC = () => {
         <div className="home-background-overlay"></div>
         <div className="home-content">
           <h1 className="home-title">
-            Добро пожаловать в королевство Вкусняшка
+            <span>Добро пожаловать в королевство</span> Вкусняшка
           </h1>
           
           <p className="home-subtitle">

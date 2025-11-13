@@ -7,10 +7,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   TextField, IconButton, Box, Badge, Popover, Typography,
   Button, Divider, List, ListItem, ListItemText, ListItemAvatar,
-  Avatar, ListItemSecondaryAction
+  Avatar, ListItemSecondaryAction, Drawer, useMediaQuery, Theme
 } from '@mui/material';
 import { useProductStore } from './store';
 
@@ -28,6 +30,9 @@ const Header: React.FC = () => {
   } = useProductStore();
 
   const [cartAnchorEl, setCartAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -57,6 +62,18 @@ const Header: React.FC = () => {
     }
   };
 
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMenuOpen(false);
+  };
+
+  const handleNavLinkClick = () => {
+    setMobileMenuOpen(false);
+  };
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('ru-RU', {
       style: 'currency',
@@ -72,7 +89,7 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="header-container">
         <div className="logo-section">
-          <StoreIcon className="logo-icon" />
+          <img src="https://ucarecdn.com/0b9c1781-6aab-4908-99ea-3cbb3c46348a/" alt="Вкусняшка" className="logo-image" />
           <Link to="/" className="logo-text">
             Вкусняшка
           </Link>
@@ -100,33 +117,111 @@ const Header: React.FC = () => {
           />
         </Box>
 
-        <nav className="nav-section">
-          <Link 
-            to="/" 
-            className={`nav-link ${location.pathname === '/' ? 'nav-link-active' : ''}`}
-          >
-            Главная
-          </Link>
-          <Link 
-            to="/products" 
-            className={`nav-link ${location.pathname === '/products' ? 'nav-link-active' : ''}`}
-          >
-            Товары
-          </Link>
-          
-          <IconButton 
-            onClick={handleCartClick}
-            className="cart-btn"
-          >
-            <Badge 
-              badgeContent={getCartItemsCount()} 
-              color="primary"
-              className="cart-badge"
+        {!isMobile && (
+          <nav className="nav-section">
+            <Link 
+              to="/" 
+              className={`nav-link ${location.pathname === '/' ? 'nav-link-active' : ''}`}
             >
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-        </nav>
+              Главная
+            </Link>
+            <Link 
+              to="/products" 
+              className={`nav-link ${location.pathname === '/products' ? 'nav-link-active' : ''}`}
+            >
+              Товары
+            </Link>
+            
+            <IconButton 
+              onClick={handleCartClick}
+              className="cart-btn"
+            >
+              <Badge 
+                badgeContent={getCartItemsCount()} 
+                color="primary"
+                className="cart-badge"
+              >
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          </nav>
+        )}
+
+        {isMobile && (
+          <div className="mobile-nav-section">
+            <IconButton 
+              onClick={handleCartClick}
+              className="cart-btn"
+            >
+              <Badge 
+                badgeContent={getCartItemsCount()} 
+                color="primary"
+                className="cart-badge"
+              >
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+
+            <IconButton 
+              onClick={handleMobileMenuToggle}
+              className="burger-menu-btn"
+            >
+              {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+            </IconButton>
+          </div>
+        )}
+
+        <Drawer
+          anchor="right"
+          open={mobileMenuOpen && isMobile}
+          onClose={handleMobileMenuClose}
+          className="mobile-menu-drawer"
+        >
+          <Box className="mobile-menu-content">
+            <Box className="mobile-menu-header">
+              <Typography variant="h6" className="mobile-menu-title">
+                Меню
+              </Typography>
+              <IconButton 
+                onClick={handleMobileMenuClose}
+                className="mobile-menu-close-btn"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+
+            <Divider className="mobile-menu-divider" />
+
+            <nav className="mobile-nav-links">
+              <Link 
+                to="/" 
+                className={`mobile-nav-link ${location.pathname === '/' ? 'mobile-nav-link-active' : ''}`}
+                onClick={handleNavLinkClick}
+              >
+                Главная
+              </Link>
+              <Link 
+                to="/products" 
+                className={`mobile-nav-link ${location.pathname === '/products' ? 'mobile-nav-link-active' : ''}`}
+                onClick={handleNavLinkClick}
+              >
+                Товары
+              </Link>
+            </nav>
+
+            <Box className="mobile-cart-info">
+              <Divider className="mobile-menu-divider" />
+              <Box className="mobile-cart-summary">
+                <Typography variant="body2" className="mobile-cart-items">
+                  Товаров в корзине: {getCartItemsCount()}
+                </Typography>
+                <Typography variant="h6" className="mobile-cart-total">
+                  {formatPrice(getCartTotal())}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Drawer>
 
         <Popover
           id={cartId}
